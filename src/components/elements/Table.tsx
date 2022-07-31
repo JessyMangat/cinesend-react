@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import usePaginatedDataFetch from '../../hooks/usePaginatedDataFetch'
+import useTablePageStore from '../../store/useTablePageStore'
 
 interface PropType {
     columns: Array<string>
@@ -8,10 +9,15 @@ interface PropType {
 const Table = (props: PropType) => {
 
     const { columns } = props
-    const { data } = usePaginatedDataFetch("/starships", "1")
+    const pageNum = useTablePageStore(state => state.pageNum)
+    const totalResults = useTablePageStore(state => state.totalResults)
+    const setTotalResults = useTablePageStore(state => state.setTotalResults)
+    const { data } = usePaginatedDataFetch("/starships", pageNum.toString())
+
 
     useEffect(() => {
         console.log(data)
+        if (data?.count && data.count !== totalResults) setTotalResults(data.count)
         
     }, [data])
 
