@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import './App.css';
 import HomePage from './components/pages/HomePage';
-import NotFoundPage from './components/pages/NotFound';
+import NotFoundPage from './components/pages/NotFoundPage';
 
 const queryClient = new QueryClient()
 
