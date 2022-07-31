@@ -1,4 +1,8 @@
-export interface Person {
+interface IObjectKeys {
+    [key: string]: any;
+  }
+
+export interface Person extends IObjectKeys{
     birth_year: string,
     created: string,
     edited: string,
@@ -17,7 +21,7 @@ export interface Person {
     vehicles: [string]
 }
 
-export interface Planet {
+export interface Planet extends IObjectKeys{
     climate: string,
     created: string,
     diameter: string,
@@ -34,7 +38,7 @@ export interface Planet {
     url: string
 }
 
-export interface Starship {
+export interface Starship extends IObjectKeys{
     MGLT: string,
     cargo_capacity: string,
     consumables: string,

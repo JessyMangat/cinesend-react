@@ -7,6 +7,8 @@ const StarshipsPage = () => {
         <>
             <Table 
                 columns={["Name", "Model", "Capacity", "Cost"]}
+                keys={["name", 'model', 'cargo_capacity', "cost_in_credits"]}
+                endpoint="/starships"
             />
             <Pagination />
         </>
