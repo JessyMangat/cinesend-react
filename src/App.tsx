@@ -4,6 +4,9 @@ import { Route, BrowserRouter, Routes } from "react-router-dom";
 import './App.css';
 import HomePage from './components/pages/HomePage';
 import NotFoundPage from './components/pages/NotFoundPage';
+import PlanetsPage from './components/pages/PlanetsPage';
+import PeoplePage from './components/pages/PeoplePage';
+import StarshipsPage from './components/pages/StarshipsPage';
 
 const queryClient = new QueryClient()
 
@@ -14,6 +17,10 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <Routes>
           <Route path='/home' element={<HomePage />} />
+          <Route path='/starships' element={<StarshipsPage />} />
+          <Route path='/planets' element={<PlanetsPage />} />
+          <Route path='/people' element={<PeoplePage />} />
+
           <Route path='/*' element={<NotFoundPage />} />
         </Routes>
       </QueryClientProvider>

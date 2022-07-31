@@ -1,10 +1,10 @@
 import React from "react";
 
-const TablePage = () => {
+const PlanetsPage = () => {
     return (
         <>
         </>
     )
 }
 
-export default TablePage
+export default PlanetsPage
