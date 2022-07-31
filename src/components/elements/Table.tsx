@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import usePaginatedDataFetch from '../../hooks/usePaginatedDataFetch'
 
 interface PropType {
     columns: Array<string>
@@ -7,6 +8,12 @@ interface PropType {
 const Table = (props: PropType) => {
 
     const { columns } = props
+    const { data } = usePaginatedDataFetch("/starships", "1")
+
+    useEffect(() => {
+        console.log(data)
+        
+    }, [data])
 
     return (
         <div className="overflow-x-auto relative">
