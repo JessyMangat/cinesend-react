@@ -8,6 +8,7 @@ import { Person, Planet, Starship } from "../../Types";
 import { Film } from "../../Types";
 import FilmCard from "../elements/FilmCard";
 import Hero from "../elements/Hero";
+import Loading from "../elements/Loading";
 
 const DetailsPage = () => {
     const location = useLocation();
@@ -37,20 +38,27 @@ const DetailsPage = () => {
     return (
         <>
             <Breadcrumb />
-            <Hero
-                text={`${data?.name} appears in ${filteredFilms?.length} films.`}
-            />
-            <div className="flex flex-row justify-center space-x-10">
+            {status === "loading" ?
+                <Loading />
+                :
+                <>
+                    <Hero
+                        text={`${data?.name} appears in ${filteredFilms?.length} films.`}
+                    />
+                    <div className="flex flex-row justify-center space-x-10">
 
-            {filteredFilms?.map(film => {
-                return <FilmCard
-                    key={film.url}
-                    title={film.title}
-                    director={film.director}
-                    opening_crawl={film.opening_crawl}
-                />
-            })}
-            </div>
+                        {filteredFilms?.map(film => {
+                            return <FilmCard
+                                key={film.url}
+                                title={film.title}
+                                director={film.director}
+                                opening_crawl={film.opening_crawl}
+                            />
+                        })}
+                    </div>
+                </>
+            }
+
         </>
     )
 }

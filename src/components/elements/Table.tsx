@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import usePaginatedDataFetch from '../../hooks/usePaginatedDataFetch'
 import useTablePageStore from '../../store/useTablePageStore'
 import { Starship } from '../../Types'
+import Loading from './Loading'
 
 interface PropType {
     columns: Array<string>
@@ -17,9 +18,9 @@ const Table = (props: PropType) => {
     const setPageNum = useTablePageStore(state => state.setPageNum)
     const totalResults = useTablePageStore(state => state.totalResults)
     const setTotalResults = useTablePageStore(state => state.setTotalResults)
-    const { data } = usePaginatedDataFetch(endpoint, pageNum.toString())
+    const { data, status } = usePaginatedDataFetch(endpoint, pageNum.toString())
     const navigate = useNavigate()
-    const location =  useLocation()
+    const location = useLocation()
 
     useEffect(() => {
         setPageNum(1)
@@ -34,7 +35,7 @@ const Table = (props: PropType) => {
         if (!data) return
 
         return data.results.map((obj) => {
-            return <tr onClick={() => {navigate(location.pathname + "/" + extractIdFromUrl(obj.url))}} className="hover:bg-gray-100 cursor-pointer border-b" key={obj.url}>
+            return <tr onClick={() => { navigate(location.pathname + "/" + extractIdFromUrl(obj.url)) }} className="hover:bg-gray-100 cursor-pointer border-b" key={obj.url}>
                 {keys.map((key, idx) => {
                     return <td className="py-4 px-6 font-medium text-gray-900" key={idx}>{obj[key]}</td>
                 })}
@@ -43,25 +44,31 @@ const Table = (props: PropType) => {
     }
 
     const extractIdFromUrl = (url: string): string => {
-        let id = url.replace( /\D/g, ""); //return only the number characters from the string
+        let id = url.replace(/\D/g, ""); //return only the number characters from the string
         return id
     }
 
     return (
-        <div className="overflow-x-auto relative">
-            <table className="w-full text-sm text-left text-gray-500 min-h-full">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-                    <tr>
-                        {columns.map((title) => {
-                            return <th scope="col" className="py-3 px-6" key={title}>{title}</th>
-                        })}
-                    </tr>
-                </thead>
-                <tbody>
-                    {generateRowData()}
-                </tbody>
-            </table>
-        </div>
+        <>
+            <div className="overflow-x-auto relative ">
+                {status === "loading" ? <Loading /> :
+                    <table className="w-full text-sm text-left text-gray-500 min-h-full">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                            <tr>
+                                {columns.map((title) => {
+                                    return <th scope="col" className="py-3 px-6" key={title}>{title}</th>
+                                })}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {generateRowData()}
+                        </tbody>
+                    </table>
+                }
+
+
+            </div>
+        </>
     )
 }
 
