@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import usePaginatedDataFetch from '../../hooks/usePaginatedDataFetch'
 import useTablePageStore from '../../store/useTablePageStore'
 import { Starship } from '../../Types'
+import SkeletonTable from '../skeletons/SkeletonTable'
 import Loading from './Loading'
 
 interface PropType {
@@ -51,7 +52,7 @@ const Table = (props: PropType) => {
     return (
         <>
             <div className="overflow-x-auto relative ">
-                {status === "loading" ? <Loading /> :
+                {status === "loading" ? <SkeletonTable /> :
                     <table className="w-full text-sm text-left text-gray-500 min-h-full">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
