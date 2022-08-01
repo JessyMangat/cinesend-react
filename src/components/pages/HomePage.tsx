@@ -21,7 +21,7 @@ const HomePage = () => {
                     path="/planets"
                 />
                 <SelectionCard
-                    title="People"
+                    title="Characters"
                     image={require("../../assets/images/character_icon.svg").default}
                     altText="Image of a starship"
                     path="/people"
