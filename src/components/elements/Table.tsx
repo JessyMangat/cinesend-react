@@ -14,16 +14,19 @@ const Table = (props: PropType) => {
 
     const { columns, endpoint, keys } = props
     const pageNum = useTablePageStore(state => state.pageNum)
+    const setPageNum = useTablePageStore(state => state.setPageNum)
     const totalResults = useTablePageStore(state => state.totalResults)
     const setTotalResults = useTablePageStore(state => state.setTotalResults)
     const { data } = usePaginatedDataFetch(endpoint, pageNum.toString())
     const navigate = useNavigate()
     const location =  useLocation()
 
+    useEffect(() => {
+        setPageNum(1)
+    }, [])
 
     useEffect(() => {
         if (data?.count && data.count !== totalResults) setTotalResults(data.count)
-
     }, [data])
 
 
