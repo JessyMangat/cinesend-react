@@ -21,7 +21,7 @@ function Pagination() {
 
     function changePage(shouldIncrement: boolean){
         if(!shouldIncrement && pageNum === 1) return
-        if(shouldIncrement && pageNum * 10 > totalResults) return
+        if(shouldIncrement && pageNum * 10 >= totalResults) return
         shouldIncrement ? setPageNum(pageNum + 1) : setPageNum(pageNum - 1)
     }
 
