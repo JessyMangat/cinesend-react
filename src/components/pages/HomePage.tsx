@@ -6,7 +6,9 @@ const HomePage = () => {
 
     return (
         <>
-            <Hero />
+            <Hero
+                text='Cinsend Senior React Developer Assessment' 
+            />
             <div className="flex flex-row justify-center space-x-10">
                 <SelectionCard
                     title="Starships"

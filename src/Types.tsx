@@ -59,9 +59,26 @@ export interface Starship extends IObjectKeys{
     url: string
 }
 
+export interface Film extends IObjectKeys{
+    title: string,
+    episode_id: string,
+    opening_crawl: string,
+    director: string,
+    producer: string,
+    release_date: string,
+    characters: Array<string>,
+    planets: Array<string>,
+    starships: Array<string>,
+    vehicles: Array<string>,
+    species: Array<string>,
+    created: string,
+    edited: string,
+    url: string
+}
+
 export interface PaginatedFetch {
     count: number,
     next: string | null
     previous: string | null
-    results: Array<Person> | Array<Starship> | Array<Planet>
+    results: Array<Person> | Array<Starship> | Array<Planet> | Array<Film>
 }

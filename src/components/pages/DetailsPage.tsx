@@ -5,27 +5,52 @@ import axios from "axios";
 import Breadcrumb from "../elements/Breadcrumb";
 import { BASE_PATH } from "../../constants";
 import { Person, Planet, Starship } from "../../Types";
+import { Film } from "../../Types";
+import FilmCard from "../elements/FilmCard";
+import Hero from "../elements/Hero";
 
 const DetailsPage = () => {
     const location = useLocation();
     const { data, status } = useQuery([location.pathname], (): Promise<Starship | Person | Planet> => axios.get(BASE_PATH + location.pathname).then(response => response.data))
-    const [allFilms, setAllFilms] = useState([]);
+    const [allFilms, setAllFilms] = useState<Film[]>();
+    const [filteredFilms, setFilteredFilms] = useState<Film[]>();
 
     useEffect(() => {
-        if (!data) return
-        console.log(data.films)
-        fetchFilmInfo(data.films)
-    }, [data])
+        const cachedFilms = localStorage.getItem("films");
+        if (cachedFilms) {
+            setAllFilms(JSON.parse(cachedFilms))
+        }
+        else {
+            axios.get(BASE_PATH + "/films").then(response => {
+                localStorage.setItem("films", JSON.stringify(response.data.results));
+                setAllFilms(response.data.results);
+            });
+        }
+    }, [])
 
-    function fetchFilmInfo(films: Array<string>){
-        axios.all(films.map((url) => axios.get(url))).then(
-            (res) => console.log(res)
-        )
-    }
+    useEffect(() => {
+        if (data && allFilms) {
+            setFilteredFilms(allFilms.filter(film => data.films.includes(film.url)))
+        }
+    }, [data, allFilms])
 
     return (
         <>
             <Breadcrumb />
+            <Hero
+                text={`${data?.name} appears in ${filteredFilms?.length} films.`}
+            />
+            <div className="flex flex-row justify-center space-x-10">
+
+            {filteredFilms?.map(film => {
+                return <FilmCard
+                    key={film.url}
+                    title={film.title}
+                    director={film.director}
+                    opening_crawl={film.opening_crawl}
+                />
+            })}
+            </div>
         </>
     )
 }
