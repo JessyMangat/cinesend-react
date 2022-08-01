@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import usePaginatedDataFetch from '../../hooks/usePaginatedDataFetch'
 import useTablePageStore from '../../store/useTablePageStore'
 import { Starship } from '../../Types'
@@ -16,25 +17,32 @@ const Table = (props: PropType) => {
     const totalResults = useTablePageStore(state => state.totalResults)
     const setTotalResults = useTablePageStore(state => state.setTotalResults)
     const { data } = usePaginatedDataFetch(endpoint, pageNum.toString())
+    const navigate = useNavigate()
+    const location =  useLocation()
 
 
     useEffect(() => {
-        console.log(data)
         if (data?.count && data.count !== totalResults) setTotalResults(data.count)
 
     }, [data])
+
 
     const generateRowData = () => {
         if (!data) return
         const objArray = data.results as Array<Starship>
 
         return objArray.map((obj) => {
-            return <tr className="hover:bg-gray-100 cursor-pointer border-b">
-                {keys.map((key) => {
-                    return <td className="py-4 px-6 font-medium text-gray-900 ">{obj[key]}</td>
+            return <tr onClick={() => {navigate(location.pathname + "/" + extractIdFromUrl(obj.url))}} className="hover:bg-gray-100 cursor-pointer border-b" key={obj.url}>
+                {keys.map((key, idx) => {
+                    return <td className="py-4 px-6 font-medium text-gray-900" key={idx}>{obj[key]}</td>
                 })}
             </tr>
         })
+    }
+
+    const extractIdFromUrl = (url: string): string => {
+        let id = url.replace( /\D/g, ""); //return only the number characters from the string
+        return id
     }
 
     return (
