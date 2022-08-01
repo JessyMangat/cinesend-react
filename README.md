@@ -25,6 +25,10 @@ The goal was to provide a solution that is reasonably scalable depending on the 
 
 The Details page currently does not handle an error from a bad url. When you navigate to it through the natural flow it fetches the data as expected. However if you manually visit a path like `/planets/4413` the api call will return a 404. Given more time I'd simply check the status of the fetch and display the appropriate error. 
 
+Additionally there are currenly no tests provided for the application. A simple testing suite that covers important functionality is something I would have liked to include. 
+
+Finally there are some instances of nested maps and other expensive computations that I would have liked to have optimized or memoized. Given the nature of the data fetching being paginated, the O(n²) complexity isn't too big of a deal since it'll be at most the number of columns * 10. 
+
 ### Other Notes
 
 The starwars icons used were courtesy of Sherzod Mirzaakhmedov from dribbble. Check it out [here](https://dribbble.com/shots/3907212-Starwars-Icon-Set)
