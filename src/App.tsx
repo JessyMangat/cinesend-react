@@ -16,7 +16,7 @@ function App() {
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <Routes>
-          <Route path='/home' element={<HomePage />} />
+          <Route path='/' element={<HomePage />} />
           <Route path='/starships' element={<StarshipsPage />} />
           <Route path='/planets' element={<PlanetsPage />} />
           <Route path='/people' element={<PeoplePage />} />

@@ -29,9 +29,8 @@ const Table = (props: PropType) => {
 
     const generateRowData = () => {
         if (!data) return
-        const objArray = data.results as Array<Starship>
 
-        return objArray.map((obj) => {
+        return data.results.map((obj) => {
             return <tr onClick={() => {navigate(location.pathname + "/" + extractIdFromUrl(obj.url))}} className="hover:bg-gray-100 cursor-pointer border-b" key={obj.url}>
                 {keys.map((key, idx) => {
                     return <td className="py-4 px-6 font-medium text-gray-900" key={idx}>{obj[key]}</td>
